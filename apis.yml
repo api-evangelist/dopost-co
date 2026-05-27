@@ -1,0 +1,60 @@
+aid: dopost-co
+name: dopost
+description: Social media scheduler API. Schedule and publish posts across Instagram, Facebook, TikTok, Pinterest, X (Twitter), and YouTube from a single REST API. Multi-account, multi-network publishing built for solo creators, agencies, and SaaS embedding.
+url: https://dopost.co/apis.yml
+image: https://dopost.co/favicon.ico
+specificationVersion: '0.20'
+created: '2026-05-27'
+modified: '2026-05-27'
+tags:
+  - Social Media
+  - Scheduling
+  - Publishing
+  - Instagram
+  - Facebook
+  - TikTok
+  - Pinterest
+  - X Twitter
+  - YouTube
+  - Content Management
+  - REST
+apis:
+  - name: dopost Social Media Scheduler API
+    description: REST API for scheduling and publishing social posts across Instagram, Facebook, TikTok, Pinterest, X (Twitter), and YouTube. Multi-network, multi-account, single key.
+    humanURL: https://dopost.co/
+    baseURL: https://dopost.co
+    tags:
+      - Social Media Scheduling
+      - Multi-Network
+    properties:
+      - type: Documentation
+        url: https://dopost.co/docs/api
+      - type: GettingStarted
+        url: https://dopost.co/docs/api
+      - type: Pricing
+        url: https://dopost.co/pricing
+    contact:
+      - FN: dopost
+        url: https://dopost.co/
+common:
+  - type: Website
+    url: https://dopost.co/
+  - type: Documentation
+    url: https://dopost.co/docs/api
+  - type: Pricing
+    url: https://dopost.co/pricing
+  - type: InstagramScheduler
+    url: https://dopost.co/instagram-social-media-scheduler
+  - type: FacebookScheduler
+    url: https://dopost.co/facebook-social-media-scheduler
+  - type: TikTokScheduler
+    url: https://dopost.co/tiktok-social-media-scheduler
+  - type: PinterestScheduler
+    url: https://dopost.co/pinterest-social-media-scheduler
+  - type: XScheduler
+    url: https://dopost.co/x-social-media-scheduler
+  - type: YouTubeScheduler
+    url: https://dopost.co/youtube-social-media-scheduler
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
