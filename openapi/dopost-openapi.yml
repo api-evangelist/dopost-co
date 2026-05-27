@@ -1,0 +1,510 @@
+openapi: 3.1.0
+info:
+  title: dopost Social Media Scheduler API
+  version: v1
+  summary: REST API for scheduling and publishing posts across Instagram, Facebook, TikTok, Pinterest, X, and YouTube.
+  description: |
+    Hand-authored OpenAPI 3.1 specification for the dopost Social Media Scheduler API,
+    derived from public documentation at https://dopost.co/docs/api as of 2026-05-27.
+
+    Authentication uses an API key passed via the `x-api-key` header. API key generation
+    happens inside the dopost web app.
+
+    All endpoints are mounted under `/api/v1/` and return `application/json`.
+
+    NOTE: Per-network publish options (Instagram, Facebook, TikTok, Pinterest, X, YouTube)
+    are referenced in the dopost docs but the exact field-level schemas for each network
+    are not enumerated in the public docs visible to anonymous users. They are modeled here
+    as `additionalProperties: true` containers so spec consumers do not lose data, and the
+    review notes (review.yml) flag these as `reconciled: false`.
+  contact:
+    name: dopost
+    url: https://dopost.co/
+  license:
+    name: Proprietary
+    url: https://dopost.co/
+servers:
+  - url: https://dopost.co
+    description: Production
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Posts
+    description: Schedule, retrieve, reschedule, and delete posts across connected networks.
+  - name: Social Accounts
+    description: Inspect connected social accounts and per-network posting limits.
+  - name: Media
+    description: Upload, list, and delete media assets used in posts.
+paths:
+  /api/v1/post/publish:
+    post:
+      tags: [Posts]
+      operationId: publishPost
+      summary: Publish or schedule a post
+      description: |
+        Publish a post immediately or schedule it for a future time on a single connected
+        social account. When `publishAt` is `null`, the post publishes immediately. When
+        `publishAt` is an ISO 8601 timestamp, the post is scheduled.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishPostRequest'
+            examples:
+              immediate:
+                summary: Publish immediately
+                value:
+                  accountId: acc_01HXYZ...
+                  text: Hello from the dopost API!
+                  publishAt: null
+              scheduled:
+                summary: Schedule for later
+                value:
+                  accountId: acc_01HXYZ...
+                  text: New product drop tomorrow.
+                  publishAt: '2026-06-01T15:00:00Z'
+      responses:
+        '200':
+          description: Post accepted for publishing or scheduling
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '422': { $ref: '#/components/responses/Unprocessable' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /api/v1/post:
+    get:
+      tags: [Posts]
+      operationId: listPosts
+      summary: List posts
+      description: Retrieve posts from your workspace with optional status filtering and cursor-based pagination.
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Filter by post status.
+          schema:
+            $ref: '#/components/schemas/PostStatus'
+        - name: cursor
+          in: query
+          required: false
+          description: Opaque cursor returned by a previous response for pagination.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of posts to return.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Paginated list of posts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostList'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /api/v1/post/{postId}:
+    get:
+      tags: [Posts]
+      operationId: getPost
+      summary: Get a post by ID
+      parameters:
+        - $ref: '#/components/parameters/PostId'
+      responses:
+        '200':
+          description: Post details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [Posts]
+      operationId: reschedulePost
+      summary: Reschedule a post
+      description: Update the scheduled publish time of a draft or scheduled post.
+      parameters:
+        - $ref: '#/components/parameters/PostId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [publishAt]
+              properties:
+                publishAt:
+                  type: string
+                  format: date-time
+                  description: New ISO 8601 publish time.
+            examples:
+              reschedule:
+                value:
+                  publishAt: '2026-06-02T12:00:00Z'
+      responses:
+        '200':
+          description: Updated post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/Unprocessable' }
+  /api/v1/post/delete/{postId}:
+    delete:
+      tags: [Posts]
+      operationId: deletePost
+      summary: Delete a post
+      description: Delete a draft or scheduled post. Published posts cannot be deleted.
+      parameters:
+        - $ref: '#/components/parameters/PostId'
+      responses:
+        '204':
+          description: Post deleted
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: Post is in a state that cannot be deleted (e.g. already published).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /api/v1/social/accounts:
+    get:
+      tags: [Social Accounts]
+      operationId: listAccounts
+      summary: List connected social accounts
+      description: Retrieve all connected social media accounts for your workspace.
+      responses:
+        '200':
+          description: Connected accounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: '#/components/schemas/Account' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/social/limits/{platform}:
+    get:
+      tags: [Social Accounts]
+      operationId: getPlatformLimits
+      summary: Get per-platform posting limits
+      description: |
+        Retrieve platform-specific posting limits and constraints, including per-format
+        limits for post types such as feed, story, reel, or YouTube short.
+      parameters:
+        - name: platform
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Platform'
+      responses:
+        '200':
+          description: Platform limits
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PlatformLimits' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404':
+          description: Platform not recognized.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+  /api/v1/media:
+    post:
+      tags: [Media]
+      operationId: uploadMedia
+      summary: Initiate a media upload
+      description: |
+        First step of the dopost media upload workflow: request a presigned URL by
+        declaring the file you intend to upload. The response includes a `mediaId`
+        and an upload `url` to PUT the file bytes to. Documented as a three-step
+        flow (request presigned URL, upload file, finalize).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [fileName, contentType, sizeInBytes]
+              properties:
+                fileName:
+                  type: string
+                  description: Original file name.
+                contentType:
+                  type: string
+                  description: MIME type of the file.
+                sizeInBytes:
+                  type: integer
+                  format: int64
+                  minimum: 1
+                  description: File size in bytes.
+            examples:
+              image:
+                value:
+                  fileName: launch.jpg
+                  contentType: image/jpeg
+                  sizeInBytes: 204800
+      responses:
+        '200':
+          description: Presigned upload created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MediaAsset' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '422': { $ref: '#/components/responses/Unprocessable' }
+    get:
+      tags: [Media]
+      operationId: listMedia
+      summary: List media assets
+      description: Retrieve media files from your workspace with cursor-based pagination.
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: Paginated media list
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MediaList' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/media/{mediaId}:
+    delete:
+      tags: [Media]
+      operationId: deleteMedia
+      summary: Delete a media asset
+      parameters:
+        - name: mediaId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204': { description: Media deleted }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '404': { $ref: '#/components/responses/NotFound' }
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Workspace API key issued from the dopost web app.
+  parameters:
+    PostId:
+      name: postId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the post.
+  responses:
+    BadRequest:
+      description: The request body is malformed.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Unprocessable:
+      description: Validation failed against platform constraints (character/media limits, schedule window, etc).
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    RateLimited:
+      description: Rate limit exceeded.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+  schemas:
+    Platform:
+      type: string
+      description: Supported social network identifier.
+      enum: [instagram, facebook, tiktok, pinterest, x, youtube]
+    PostStatus:
+      type: string
+      enum: [draft, scheduled, published, failed]
+    PublishPostRequest:
+      type: object
+      required: [accountId, text]
+      properties:
+        accountId:
+          type: string
+          description: ID of the connected social account that owns the post.
+        text:
+          type: string
+          description: Post body / caption text.
+        publishAt:
+          type: [string, 'null']
+          format: date-time
+          description: ISO 8601 timestamp when the post should publish. `null` publishes immediately.
+        mediaIds:
+          type: array
+          description: Optional list of `mediaId` values previously created via the Media API.
+          items:
+            type: string
+        instagram:
+          $ref: '#/components/schemas/NetworkOptions'
+        facebook:
+          $ref: '#/components/schemas/NetworkOptions'
+        tiktok:
+          $ref: '#/components/schemas/NetworkOptions'
+        pinterest:
+          $ref: '#/components/schemas/NetworkOptions'
+        x:
+          $ref: '#/components/schemas/NetworkOptions'
+        youtube:
+          $ref: '#/components/schemas/NetworkOptions'
+    NetworkOptions:
+      type: object
+      description: |
+        Network-specific publish options. dopost docs reference per-network option blocks
+        (e.g. Instagram feed/story/reel, YouTube short, Pinterest board) but do not enumerate
+        every field publicly. This object is intentionally open.
+      additionalProperties: true
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        accountId:
+          type: string
+        status:
+          $ref: '#/components/schemas/PostStatus'
+        text:
+          type: string
+        publishAt:
+          type: [string, 'null']
+          format: date-time
+        publishedAt:
+          type: [string, 'null']
+          format: date-time
+        mediaIds:
+          type: array
+          items: { type: string }
+        platform:
+          $ref: '#/components/schemas/Platform'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PostList:
+      type: object
+      properties:
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/Post' }
+        nextCursor:
+          type: [string, 'null']
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        platform:
+          $ref: '#/components/schemas/Platform'
+        displayName:
+          type: string
+        handle:
+          type: string
+        connected:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    PlatformLimits:
+      type: object
+      properties:
+        platform:
+          $ref: '#/components/schemas/Platform'
+        characterLimit:
+          type: integer
+        mediaLimit:
+          type: integer
+        formats:
+          type: object
+          description: Per-format constraints (feed, story, reel, short, etc.).
+          additionalProperties:
+            type: object
+            properties:
+              characterLimit:
+                type: integer
+              mediaLimit:
+                type: integer
+              maxDurationSeconds:
+                type: integer
+            additionalProperties: true
+    MediaAsset:
+      type: object
+      properties:
+        mediaId:
+          type: string
+        url:
+          type: string
+          format: uri
+          description: Presigned URL to PUT the file bytes to (during initial upload) or the public/CDN URL once finalized.
+        type:
+          type: string
+          description: Media type classification (e.g. image, video).
+        fileName:
+          type: string
+        contentType:
+          type: string
+        sizeInBytes:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+    MediaList:
+      type: object
+      properties:
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/MediaAsset' }
+        nextCursor:
+          type: [string, 'null']
+    Error:
+      type: object
+      required: [message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true

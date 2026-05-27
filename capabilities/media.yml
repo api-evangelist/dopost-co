@@ -1,0 +1,29 @@
+capability: media
+description: Upload, list, and delete media assets used as attachments on posts.
+provider: dopost-co
+api: dopost
+operations:
+  - operationId: uploadMedia
+    intent: Initiate a media upload (returns presigned upload URL + mediaId).
+    method: POST
+    path: /api/v1/media
+    inputs: [fileName, contentType, sizeInBytes]
+    outputs: [mediaId, url, type]
+    notes: dopost docs describe a three-step flow — request presigned URL, PUT file, finalize.
+  - operationId: listMedia
+    intent: Page through media assets in the workspace.
+    method: GET
+    path: /api/v1/media
+    inputs: [cursor, limit]
+    outputs: [media, nextCursor]
+  - operationId: deleteMedia
+    intent: Delete a media asset from the workspace.
+    method: DELETE
+    path: /api/v1/media/{mediaId}
+    inputs: [mediaId]
+    outputs: []
+governance:
+  scopes: []
+  rate_limits_ref: ../rate-limits/dopost-co-rate-limits.yml
+  data_residency: unknown
+reconciled: true

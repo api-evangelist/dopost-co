@@ -1,0 +1,67 @@
+focus_version: "1.3"
+provider: dopost-co
+api: dopost
+source:
+  - https://dopost.co/pricing
+  - https://dopost.co/
+fetched_at: 2026-05-27
+reconciled: false
+notes: |
+  Mapped to FinOps Open Cost & Usage Specification (FOCUS) v1.3 row shape.
+  dopost is a SaaS subscription with tiered seats / accounts; the visible billing
+  primitive is a flat monthly plan price in EUR. Per-post or per-account overage
+  pricing is not publicly documented. `reconciled: false` because plan quotas
+  could not be retrieved anonymously.
+billing_model:
+  primary: subscription
+  secondary: null
+charge_categories:
+  - chargeCategory: Usage
+    chargeSubcategory: Subscription
+    billingPeriod: monthly
+    pricingUnit: account-month (per dopost workspace plan)
+    pricingCurrency: EUR
+    skus:
+      - skuId: dopost-creator
+        skuPriceDetails:
+          listPrice: 10.00
+          currency: EUR
+          billingPeriod: monthly
+      - skuId: dopost-pro
+        skuPriceDetails:
+          listPrice: 23.00
+          currency: EUR
+          billingPeriod: monthly
+        capabilities: [api_access, automation_via_n8n_make_zapier]
+      - skuId: dopost-agency
+        skuPriceDetails:
+          listPrice: 71.00
+          currency: EUR
+          billingPeriod: monthly
+        capabilities: [api_access, automation_via_n8n_make_zapier]
+focus_columns:
+  ProviderName: dopost
+  PublisherName: dopost
+  InvoiceIssuerName: dopost
+  ServiceName: dopost Social Media Scheduler
+  ServiceCategory: Software-as-a-Service
+  BillingCurrency: EUR
+  ChargeCategory: Usage
+  ChargeClass: null
+  CommitmentDiscountType: null
+  ConsumedQuantity:
+    metric: workspace-months
+    documented: true
+  ConsumedUnit: workspace-month
+  PricingQuantity: 1
+  PricingUnit: workspace-month
+metering:
+  primary_units:
+    - workspace_subscription_month
+  possible_secondary_units:
+    - connected_account (informational; not a direct billing unit on the public site)
+    - scheduled_post (informational; not a direct billing unit on the public site)
+gaps:
+  - Per-plan post quotas / overage rates not published anonymously.
+  - Annual discount percentage not captured.
+  - No public usage-based / per-API-call price.

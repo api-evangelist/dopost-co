@@ -1,0 +1,22 @@
+capability: accounts
+description: Inspect connected social accounts and per-network posting limits.
+provider: dopost-co
+api: dopost
+operations:
+  - operationId: listAccounts
+    intent: List all connected social accounts for the workspace.
+    method: GET
+    path: /api/v1/social/accounts
+    inputs: []
+    outputs: [accounts]
+  - operationId: getPlatformLimits
+    intent: Fetch character/media/format limits for a given network before publishing.
+    method: GET
+    path: /api/v1/social/limits/{platform}
+    inputs: [platform]
+    outputs: [characterLimit, mediaLimit, formats]
+governance:
+  scopes: []
+  rate_limits_ref: ../rate-limits/dopost-co-rate-limits.yml
+  data_residency: unknown
+reconciled: true

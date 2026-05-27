@@ -1,0 +1,46 @@
+extends: ["spectral:oas"]
+rules:
+  dopost-must-have-api-key-security:
+    description: Every operation must reference the x-api-key security scheme.
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: security
+      function: truthy
+  dopost-versioned-path:
+    description: All operation paths must be mounted under /api/v1/.
+    severity: error
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/api/v1/"
+  dopost-operation-must-have-tags:
+    description: Operations must be tagged (Posts | Social Accounts | Media).
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: length
+      functionOptions:
+        min: 1
+  dopost-platform-enum:
+    description: Platform identifiers must match the documented network set.
+    severity: warn
+    given: "$.components.schemas.Platform.enum"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            enum: [instagram, facebook, tiktok, pinterest, x, youtube]
+  dopost-no-bearer:
+    description: dopost uses x-api-key, not Bearer auth — flag accidental Bearer schemes.
+    severity: warn
+    given: "$.components.securitySchemes[*]"
+    then:
+      field: scheme
+      function: pattern
+      functionOptions:
+        notMatch: "^bearer$"

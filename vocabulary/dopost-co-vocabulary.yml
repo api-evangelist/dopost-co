@@ -1,0 +1,32 @@
+vocabulary: dopost-co
+version: 0.1.0
+source: https://dopost.co/docs/api
+reconciled: true
+terms:
+  - term: Network
+    aliases: [Platform, SocialNetwork]
+    definition: A supported social network destination. Documented values are instagram, facebook, tiktok, pinterest, x, youtube. (dopost also markets support for LinkedIn, Threads, BlueSky, and Mastodon on the home page but they are not enumerated in the API docs.)
+    schema_ref: openapi/dopost-openapi.yml#/components/schemas/Platform
+  - term: Account
+    aliases: [SocialAccount, ConnectedAccount]
+    definition: A user-owned credentialed account on a Network, connected to a dopost workspace and addressable by accountId.
+    schema_ref: openapi/dopost-openapi.yml#/components/schemas/Account
+  - term: Post
+    aliases: [SocialMediaPosting]
+    definition: A unit of content scheduled or published to a single Account. Status is one of draft, scheduled, published, failed.
+    schema_ref: openapi/dopost-openapi.yml#/components/schemas/Post
+  - term: Schedule
+    aliases: [publishAt]
+    definition: ISO 8601 timestamp indicating when a Post should be published. Null means publish immediately.
+  - term: Media
+    aliases: [MediaAsset, MediaObject]
+    definition: A file (image/video) uploaded via a three-step presigned-URL flow and attached to Posts by mediaId.
+    schema_ref: openapi/dopost-openapi.yml#/components/schemas/MediaAsset
+  - term: Engagement
+    aliases: [Analytics]
+    definition: Performance metrics for published posts. Referenced in marketing copy ("Advanced Analytics") but not exposed as a documented endpoint as of 2026-05-27.
+    reconciled: false
+  - term: PlatformLimits
+    aliases: [Limits]
+    definition: Per-network constraints (characterLimit, mediaLimit, per-format rules for feed/story/reel/short) returned by GET /api/v1/social/limits/{platform}.
+    schema_ref: openapi/dopost-openapi.yml#/components/schemas/PlatformLimits

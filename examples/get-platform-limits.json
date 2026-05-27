@@ -1,0 +1,18 @@
+{
+  "_notes": "dopost does not document a generic /analytics endpoint as of 2026-05-27. The closest published surface that informs publishing decisions is /api/v1/social/limits/{platform}, used pre-publish to validate posts against per-network caps. This example illustrates a real, documented call.",
+  "request": {
+    "method": "GET",
+    "url": "https://dopost.co/api/v1/social/limits/instagram",
+    "headers": { "x-api-key": "<apiKey>" }
+  },
+  "response_example": {
+    "platform": "instagram",
+    "characterLimit": 2200,
+    "mediaLimit": 10,
+    "formats": {
+      "feed": { "characterLimit": 2200, "mediaLimit": 10 },
+      "story": { "characterLimit": 0, "mediaLimit": 1 },
+      "reel": { "characterLimit": 2200, "mediaLimit": 1, "maxDurationSeconds": 90 }
+    }
+  }
+}

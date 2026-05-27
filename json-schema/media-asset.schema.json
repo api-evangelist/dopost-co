@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dopost.co/schemas/media-asset.schema.json",
+  "title": "MediaAsset",
+  "type": "object",
+  "required": ["mediaId"],
+  "properties": {
+    "mediaId": { "type": "string" },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Presigned upload URL on creation; CDN/serving URL once finalized."
+    },
+    "type": { "type": "string", "description": "Media classification, e.g. image, video." },
+    "fileName": { "type": "string" },
+    "contentType": { "type": "string" },
+    "sizeInBytes": { "type": "integer", "minimum": 1 },
+    "createdAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": true
+}

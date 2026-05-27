@@ -1,0 +1,33 @@
+provider: dopost-co
+api: dopost
+source: https://dopost.co/docs/api
+fetched_at: 2026-05-27
+reconciled: false
+notes: |
+  dopost's public API documentation at /docs/api does not enumerate global rate limits or
+  per-endpoint quotas as of 2026-05-27. The closest documented surface is
+  GET /api/v1/social/limits/{platform}, which returns *content* constraints per network
+  (characterLimit, mediaLimit, per-format rules) — not API call quotas.
+  Treat the values below as observational/defensive defaults until dopost publishes a
+  rate-limit policy.
+http_response_signals:
+  status_429: assumed (industry standard) — not confirmed in dopost docs
+  retry_after_header: unknown
+  rate_limit_headers: unknown
+content_limits:
+  source: GET /api/v1/social/limits/{platform}
+  shape:
+    characterLimit: integer
+    mediaLimit: integer
+    formats:
+      feed: { characterLimit: integer, mediaLimit: integer }
+      story: { characterLimit: integer, mediaLimit: integer }
+      reel: { characterLimit: integer, mediaLimit: integer, maxDurationSeconds: integer }
+      short: { characterLimit: integer, maxDurationSeconds: integer }
+api_call_limits:
+  global: unknown
+  per_endpoint: unknown
+gaps:
+  - No documented per-plan API call quota.
+  - No documented per-network publish frequency cap from dopost's side (network-side caps still apply).
+  - Header naming for rate-limit / retry-after not published.

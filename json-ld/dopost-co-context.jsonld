@@ -1,0 +1,26 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "dopost": "https://dopost.co/vocab#",
+    "Post": "SocialMediaPosting",
+    "Account": "Organization",
+    "MediaAsset": "MediaObject",
+    "id": "@id",
+    "text": "articleBody",
+    "publishAt": "datePublished",
+    "publishedAt": "datePublished",
+    "platform": "dopost:platform",
+    "accountId": "dopost:accountId",
+    "mediaIds": "associatedMedia",
+    "handle": "alternateName",
+    "displayName": "name",
+    "url": "url",
+    "contentType": "encodingFormat",
+    "sizeInBytes": "contentSize",
+    "fileName": "name",
+    "status": "dopost:status",
+    "characterLimit": "dopost:characterLimit",
+    "mediaLimit": "dopost:mediaLimit",
+    "formats": "dopost:formats"
+  }
+}

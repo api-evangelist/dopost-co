@@ -1,0 +1,38 @@
+{
+  "_notes": "dopost's publish endpoint targets a single accountId per call. To fan out across networks, the consumer issues N publish calls — one per connected account. This example shows the orchestration pattern.",
+  "requests": [
+    {
+      "method": "POST",
+      "url": "https://dopost.co/api/v1/post/publish",
+      "headers": { "x-api-key": "<apiKey>", "Content-Type": "application/json" },
+      "body": {
+        "accountId": "acc_x_01",
+        "text": "New product drop. 24h preview for subscribers.",
+        "publishAt": "2026-06-01T15:00:00Z"
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://dopost.co/api/v1/post/publish",
+      "headers": { "x-api-key": "<apiKey>", "Content-Type": "application/json" },
+      "body": {
+        "accountId": "acc_instagram_01",
+        "text": "New product drop. 24h preview for subscribers.",
+        "publishAt": "2026-06-01T15:00:00Z",
+        "mediaIds": ["med_01J0ABC"],
+        "instagram": { "format": "feed" }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "https://dopost.co/api/v1/post/publish",
+      "headers": { "x-api-key": "<apiKey>", "Content-Type": "application/json" },
+      "body": {
+        "accountId": "acc_pinterest_01",
+        "text": "New product drop. 24h preview for subscribers.",
+        "publishAt": "2026-06-01T15:00:00Z",
+        "mediaIds": ["med_01J0ABC"]
+      }
+    }
+  ]
+}

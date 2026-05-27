@@ -1,0 +1,45 @@
+provider: dopost-co
+source: https://dopost.co/pricing
+fetched_at: 2026-05-27
+reconciled: false
+notes: |
+  The /pricing page rendered as a login wall under WebFetch's anonymous fetch on 2026-05-27.
+  Plan names and headline monthly prices were captured from the dopost.co marketing home page.
+  API access tier ("Pro and above") is also from the marketing copy. Per-plan post quotas,
+  storage, seat counts, and specific API rate caps were NOT recoverable anonymously and are
+  left null — to be filled when an authenticated capture is made.
+currency: EUR
+billing_period: monthly
+plans:
+  - name: Creator
+    price: 10
+    currency: EUR
+    billing_period: monthly
+    accounts: null
+    storage_gb: null
+    team_seats: null
+    api_access: false
+    notes: Entry tier (price from homepage).
+  - name: Pro
+    price: 23
+    currency: EUR
+    billing_period: monthly
+    accounts: null
+    storage_gb: null
+    team_seats: null
+    api_access: true
+    notes: HTTP API + automation (n8n, Make, Zapier, custom scripts) available on Pro and above per marketing copy.
+  - name: Agency
+    price: 71
+    currency: EUR
+    billing_period: monthly
+    accounts: null
+    storage_gb: null
+    team_seats: null
+    api_access: true
+    notes: Top tier (price from homepage).
+gaps:
+  - Per-plan post/account/storage/seat quotas not reconciled.
+  - Annual pricing not captured.
+  - Free trial / freemium policy not captured.
+  - Any per-call or per-post API rate caps not documented publicly.

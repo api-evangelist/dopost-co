@@ -1,0 +1,14 @@
+capability: analytics
+description: Engagement and performance metrics for published posts.
+provider: dopost-co
+api: dopost
+operations: []
+governance:
+  scopes: []
+  rate_limits_ref: ../rate-limits/dopost-co-rate-limits.yml
+  data_residency: unknown
+reconciled: false
+notes: |
+  dopost's marketing pages reference "Advanced Analytics" but no analytics endpoint is
+  exposed under /docs/api/endpoints as of 2026-05-27. Stub kept for forward-compatibility;
+  no operations are listed so consumers do not infer behavior that has not been documented.

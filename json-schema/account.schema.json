@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dopost.co/schemas/account.schema.json",
+  "title": "Account",
+  "type": "object",
+  "required": ["id", "platform"],
+  "properties": {
+    "id": { "type": "string", "description": "dopost-internal connected-account identifier." },
+    "platform": {
+      "type": "string",
+      "enum": ["instagram", "facebook", "tiktok", "pinterest", "x", "youtube"]
+    },
+    "displayName": { "type": "string" },
+    "handle": { "type": "string" },
+    "connected": { "type": "boolean" },
+    "createdAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": true
+}

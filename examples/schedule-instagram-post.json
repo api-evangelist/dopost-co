@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://dopost.co/api/v1/post/publish",
+    "headers": {
+      "x-api-key": "<apiKey>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "accountId": "acc_instagram_01HXYZ",
+      "text": "Launch day. Link in bio. #shipit",
+      "publishAt": "2026-06-01T15:00:00Z",
+      "mediaIds": ["med_01J0ABC"],
+      "instagram": {
+        "format": "feed"
+      }
+    }
+  },
+  "response_example": {
+    "id": "post_01J1ABC",
+    "accountId": "acc_instagram_01HXYZ",
+    "platform": "instagram",
+    "status": "scheduled",
+    "text": "Launch day. Link in bio. #shipit",
+    "publishAt": "2026-06-01T15:00:00Z",
+    "publishedAt": null,
+    "mediaIds": ["med_01J0ABC"],
+    "createdAt": "2026-05-27T18:30:00Z",
+    "updatedAt": "2026-05-27T18:30:00Z"
+  }
+}

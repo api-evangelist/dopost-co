@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dopost.co/schemas/post.schema.json",
+  "title": "Post",
+  "type": "object",
+  "required": ["id", "accountId", "status", "text"],
+  "properties": {
+    "id": { "type": "string", "description": "Unique dopost post identifier." },
+    "accountId": { "type": "string", "description": "Connected social account that owns the post." },
+    "platform": {
+      "type": "string",
+      "enum": ["instagram", "facebook", "tiktok", "pinterest", "x", "youtube"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "scheduled", "published", "failed"]
+    },
+    "text": { "type": "string" },
+    "publishAt": { "type": ["string", "null"], "format": "date-time" },
+    "publishedAt": { "type": ["string", "null"], "format": "date-time" },
+    "mediaIds": { "type": "array", "items": { "type": "string" } },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": true
+}

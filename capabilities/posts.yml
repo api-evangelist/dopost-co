@@ -1,0 +1,40 @@
+capability: posts
+description: Schedule, retrieve, reschedule, and delete posts across connected social networks.
+provider: dopost-co
+api: dopost
+operations:
+  - operationId: publishPost
+    intent: Schedule or immediately publish a post to a single connected account.
+    method: POST
+    path: /api/v1/post/publish
+    inputs: [accountId, text, publishAt, mediaIds, networkOptions]
+    outputs: [post]
+  - operationId: listPosts
+    intent: Page through workspace posts, optionally filtered by status.
+    method: GET
+    path: /api/v1/post
+    inputs: [status, cursor, limit]
+    outputs: [posts, nextCursor]
+  - operationId: getPost
+    intent: Fetch a single post by id.
+    method: GET
+    path: /api/v1/post/{postId}
+    inputs: [postId]
+    outputs: [post]
+  - operationId: reschedulePost
+    intent: Update the publish time of a scheduled or draft post.
+    method: PATCH
+    path: /api/v1/post/{postId}
+    inputs: [postId, publishAt]
+    outputs: [post]
+  - operationId: deletePost
+    intent: Cancel a draft or scheduled post.
+    method: DELETE
+    path: /api/v1/post/delete/{postId}
+    inputs: [postId]
+    outputs: []
+governance:
+  scopes: []
+  rate_limits_ref: ../rate-limits/dopost-co-rate-limits.yml
+  data_residency: unknown
+reconciled: true

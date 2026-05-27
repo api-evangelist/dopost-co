@@ -1,0 +1,57 @@
+provider: dopost-co
+reviewed_at: 2026-05-27
+reviewer: Kin Lane (API Evangelist)
+sources:
+  - https://dopost.co/
+  - https://dopost.co/docs/api
+  - https://dopost.co/docs/api/endpoints/post/publish
+  - https://dopost.co/docs/api/endpoints/post/list-posts
+  - https://dopost.co/docs/api/endpoints/post/get-post
+  - https://dopost.co/docs/api/endpoints/post/reschedule-post
+  - https://dopost.co/docs/api/endpoints/post/delete-post
+  - https://dopost.co/docs/api/endpoints/social-account/accounts
+  - https://dopost.co/docs/api/endpoints/social-account/limits
+  - https://dopost.co/docs/api/endpoints/media/upload
+  - https://dopost.co/docs/api/endpoints/media/list-media
+  - https://dopost.co/docs/api/endpoints/media/delete-media
+  - https://dopost.co/pricing
+summary: |
+  dopost is a multi-network social scheduler with a real, documented REST API mounted at
+  https://dopost.co/api/v1/. Authentication is via the x-api-key header (workspace API key,
+  generated inside the app). The documented surface area is small but coherent:
+  posts (5 ops), social accounts (2 ops), media (3 ops) — ten endpoints total. No public
+  OpenAPI document is published, so this spec was hand-authored from the JS-rendered docs
+  pages.
+endpoints_documented:
+  - POST   /api/v1/post/publish
+  - GET    /api/v1/post
+  - GET    /api/v1/post/{postId}
+  - PATCH  /api/v1/post/{postId}
+  - DELETE /api/v1/post/delete/{postId}
+  - GET    /api/v1/social/accounts
+  - GET    /api/v1/social/limits/{platform}
+  - POST   /api/v1/media
+  - GET    /api/v1/media
+  - DELETE /api/v1/media/{mediaId}
+strengths:
+  - Clear single-network-per-call model for /publish — simpler than competitors that overload one body for fan-out.
+  - Three-step presigned-URL media upload — sensible for large video files.
+  - Per-platform /limits endpoint is unusual and lets clients pre-validate.
+  - MCP support published for Claude Desktop, ChatGPT, Cursor, VS Code Copilot, Windsurf.
+gaps:
+  - No public OpenAPI / Postman collection downloadable (docs are JS-rendered Next.js).
+  - No documented analytics / engagement endpoint despite "Advanced Analytics" marketing claim.
+  - Per-network publish option schemas (Instagram feed/story/reel, YouTube short, Pinterest board, etc.) are referenced in the docs but not field-level enumerated publicly.
+  - No public rate-limit / quota documentation.
+  - Pricing page gated behind login for anonymous fetchers — full per-plan quotas not reconciled.
+  - Path inconsistency worth noting: DELETE post uses /api/v1/post/delete/{postId} while GET/PATCH use /api/v1/post/{postId}.
+reconciled:
+  openapi: partial
+  capabilities: true
+  json_schema: true
+  examples: true
+  rules: true
+  vocabulary: true
+  plans: false
+  rate_limits: false
+  finops: false
