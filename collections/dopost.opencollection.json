@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dopost Social Media Scheduler API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Publish or schedule a post",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dopost.co/api/v1/post/publish",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Publish a post immediately or schedule it for a future time on a single connected\nsocial account. When `publishAt` is `null`, the post publishes immediately. When\n`publishAt` is an ISO 8601 timestamp, the post is scheduled.\n"
+        },
+        {
+          "info": {
+            "name": "List posts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/post",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by post status."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor returned by a previous response for pagination."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of posts to return."
+              }
+            ]
+          },
+          "docs": "Retrieve posts from your workspace with optional status filtering and cursor-based pagination."
+        },
+        {
+          "info": {
+            "name": "Get a post by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/post/:postId",
+            "params": [
+              {
+                "name": "postId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the post."
+              }
+            ]
+          },
+          "docs": "Get a post by ID"
+        },
+        {
+          "info": {
+            "name": "Reschedule a post",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dopost.co/api/v1/post/:postId",
+            "params": [
+              {
+                "name": "postId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the post."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the scheduled publish time of a draft or scheduled post."
+        },
+        {
+          "info": {
+            "name": "Delete a post",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dopost.co/api/v1/post/delete/:postId",
+            "params": [
+              {
+                "name": "postId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the post."
+              }
+            ]
+          },
+          "docs": "Delete a draft or scheduled post. Published posts cannot be deleted."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Social Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connected social accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/social/accounts"
+          },
+          "docs": "Retrieve all connected social media accounts for your workspace."
+        },
+        {
+          "info": {
+            "name": "Get per-platform posting limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/social/limits/:platform",
+            "params": [
+              {
+                "name": "platform",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve platform-specific posting limits and constraints, including per-format\nlimits for post types such as feed, story, reel, or YouTube short.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Media",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List media assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/media",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve media files from your workspace with cursor-based pagination."
+        },
+        {
+          "info": {
+            "name": "Initiate a media upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dopost.co/api/v1/media",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "First step of the dopost media upload workflow: request a presigned URL by\ndeclaring the file you intend to upload. The response includes a `mediaId`\nand an upload `url` to PUT the file bytes to. Documented as a three-step\nflow (request presigned URL, upload file, finalize).\n"
+        },
+        {
+          "info": {
+            "name": "Delete a media asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dopost.co/api/v1/media/:mediaId",
+            "params": [
+              {
+                "name": "mediaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a media asset"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
