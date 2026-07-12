@@ -37,6 +37,10 @@ apis:
       - FN: dopost
         url: https://dopost.co/
 common:
+  - type: DomainSecurity
+    url: security/dopost-co-domain-security.yml
+  - type: Authentication
+    url: authentication/dopost-co-authentication.yml
   - type: Website
     url: https://dopost.co/
   - type: Documentation
@@ -55,6 +59,8 @@ common:
     url: https://dopost.co/x-social-media-scheduler
   - type: YouTubeScheduler
     url: https://dopost.co/youtube-social-media-scheduler
+  - type: Blog
+    url: https://dopost.co/blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
