@@ -1,0 +1,21 @@
+{
+  "repo": "dopost-co",
+  "feeds": [
+    {
+      "source": "https://dopost.co/blog",
+      "feed_url": "https://dopost.co/blog",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://dopost.co/youtube-social-media-scheduler",
+      "feed_url": "https://dopost.co/youtube-social-media-scheduler",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 3
+}
