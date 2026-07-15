@@ -37,6 +37,8 @@ apis:
       - FN: dopost
         url: https://dopost.co/
 common:
+  - type: AgenticAccess
+    url: agentic-access/dopost-co-agentic-access.yml
   - type: DomainSecurity
     url: security/dopost-co-domain-security.yml
   - type: Authentication
