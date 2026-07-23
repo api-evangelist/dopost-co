@@ -1,0 +1,217 @@
+openapi: 3.1.0
+info:
+  title: dopost Social Scheduler Media API
+  version: v1
+  summary: REST API for scheduling and publishing posts across Instagram, Facebook, TikTok, Pinterest, X, and YouTube.
+  description: 'Hand-authored OpenAPI 3.1 specification for the dopost Social Media Scheduler API,
+
+    derived from public documentation at https://dopost.co/docs/api as of 2026-05-27.
+
+
+    Authentication uses an API key passed via the `x-api-key` header. API key generation
+
+    happens inside the dopost web app.
+
+
+    All endpoints are mounted under `/api/v1/` and return `application/json`.
+
+
+    NOTE: Per-network publish options (Instagram, Facebook, TikTok, Pinterest, X, YouTube)
+
+    are referenced in the dopost docs but the exact field-level schemas for each network
+
+    are not enumerated in the public docs visible to anonymous users. They are modeled here
+
+    as `additionalProperties: true` containers so spec consumers do not lose data, and the
+
+    review notes (review.yml) flag these as `reconciled: false`.
+
+    '
+  contact:
+    name: dopost
+    url: https://dopost.co/
+  license:
+    name: Proprietary
+    url: https://dopost.co/
+servers:
+- url: https://dopost.co
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Media
+  description: Upload, list, and delete media assets used in posts.
+paths:
+  /api/v1/media:
+    post:
+      tags:
+      - Media
+      operationId: uploadMedia
+      summary: Initiate a media upload
+      description: 'First step of the dopost media upload workflow: request a presigned URL by
+
+        declaring the file you intend to upload. The response includes a `mediaId`
+
+        and an upload `url` to PUT the file bytes to. Documented as a three-step
+
+        flow (request presigned URL, upload file, finalize).
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - fileName
+              - contentType
+              - sizeInBytes
+              properties:
+                fileName:
+                  type: string
+                  description: Original file name.
+                contentType:
+                  type: string
+                  description: MIME type of the file.
+                sizeInBytes:
+                  type: integer
+                  format: int64
+                  minimum: 1
+                  description: File size in bytes.
+            examples:
+              image:
+                value:
+                  fileName: launch.jpg
+                  contentType: image/jpeg
+                  sizeInBytes: 204800
+      responses:
+        '200':
+          description: Presigned upload created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaAsset'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/Unprocessable'
+    get:
+      tags:
+      - Media
+      operationId: listMedia
+      summary: List media assets
+      description: Retrieve media files from your workspace with cursor-based pagination.
+      parameters:
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      responses:
+        '200':
+          description: Paginated media list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/media/{mediaId}:
+    delete:
+      tags:
+      - Media
+      operationId: deleteMedia
+      summary: Delete a media asset
+      parameters:
+      - name: mediaId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Media deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unprocessable:
+      description: Validation failed against platform constraints (character/media limits, schedule window, etc).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    MediaList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MediaAsset'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    MediaAsset:
+      type: object
+      properties:
+        mediaId:
+          type: string
+        url:
+          type: string
+          format: uri
+          description: Presigned URL to PUT the file bytes to (during initial upload) or the public/CDN URL once finalized.
+        type:
+          type: string
+          description: Media type classification (e.g. image, video).
+        fileName:
+          type: string
+        contentType:
+          type: string
+        sizeInBytes:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Workspace API key issued from the dopost web app.

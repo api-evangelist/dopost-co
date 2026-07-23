@@ -1,0 +1,172 @@
+openapi: 3.1.0
+info:
+  title: dopost Social Scheduler Media Social Accounts API
+  version: v1
+  summary: REST API for scheduling and publishing posts across Instagram, Facebook, TikTok, Pinterest, X, and YouTube.
+  description: 'Hand-authored OpenAPI 3.1 specification for the dopost Social Media Scheduler API,
+
+    derived from public documentation at https://dopost.co/docs/api as of 2026-05-27.
+
+
+    Authentication uses an API key passed via the `x-api-key` header. API key generation
+
+    happens inside the dopost web app.
+
+
+    All endpoints are mounted under `/api/v1/` and return `application/json`.
+
+
+    NOTE: Per-network publish options (Instagram, Facebook, TikTok, Pinterest, X, YouTube)
+
+    are referenced in the dopost docs but the exact field-level schemas for each network
+
+    are not enumerated in the public docs visible to anonymous users. They are modeled here
+
+    as `additionalProperties: true` containers so spec consumers do not lose data, and the
+
+    review notes (review.yml) flag these as `reconciled: false`.
+
+    '
+  contact:
+    name: dopost
+    url: https://dopost.co/
+  license:
+    name: Proprietary
+    url: https://dopost.co/
+servers:
+- url: https://dopost.co
+  description: Production
+security:
+- ApiKeyAuth: []
+tags:
+- name: Social Accounts
+  description: Inspect connected social accounts and per-network posting limits.
+paths:
+  /api/v1/social/accounts:
+    get:
+      tags:
+      - Social Accounts
+      operationId: listAccounts
+      summary: List connected social accounts
+      description: Retrieve all connected social media accounts for your workspace.
+      responses:
+        '200':
+          description: Connected accounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/social/limits/{platform}:
+    get:
+      tags:
+      - Social Accounts
+      operationId: getPlatformLimits
+      summary: Get per-platform posting limits
+      description: 'Retrieve platform-specific posting limits and constraints, including per-format
+
+        limits for post types such as feed, story, reel, or YouTube short.
+
+        '
+      parameters:
+      - name: platform
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/Platform'
+      responses:
+        '200':
+          description: Platform limits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformLimits'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Platform not recognized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    PlatformLimits:
+      type: object
+      properties:
+        platform:
+          $ref: '#/components/schemas/Platform'
+        characterLimit:
+          type: integer
+        mediaLimit:
+          type: integer
+        formats:
+          type: object
+          description: Per-format constraints (feed, story, reel, short, etc.).
+          additionalProperties:
+            type: object
+            properties:
+              characterLimit:
+                type: integer
+              mediaLimit:
+                type: integer
+              maxDurationSeconds:
+                type: integer
+            additionalProperties: true
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        platform:
+          $ref: '#/components/schemas/Platform'
+        displayName:
+          type: string
+        handle:
+          type: string
+        connected:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    Platform:
+      type: string
+      description: Supported social network identifier.
+      enum:
+      - instagram
+      - facebook
+      - tiktok
+      - pinterest
+      - x
+      - youtube
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Workspace API key issued from the dopost web app.
