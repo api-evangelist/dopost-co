@@ -2,6 +2,19 @@ aid: dopost-co
 name: dopost
 description: Social media scheduler API. Schedule and publish posts across Instagram, Facebook, TikTok, Pinterest, X (Twitter), and YouTube from a single REST API. Multi-account, multi-network publishing built for solo creators, agencies, and SaaS embedding.
 url: https://dopost.co/apis.yml
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://dopost.co/favicon.ico
 specificationVersion: '0.20'
 created: '2026-05-27'
@@ -19,23 +32,55 @@ tags:
   - Content Management
   - REST
 apis:
-  - name: dopost Social Media Scheduler API
-    description: REST API for scheduling and publishing social posts across Instagram, Facebook, TikTok, Pinterest, X (Twitter), and YouTube. Multi-network, multi-account, single key.
-    humanURL: https://dopost.co/
-    baseURL: https://dopost.co
-    tags:
-      - Social Media Scheduling
-      - Multi-Network
-    properties:
-      - type: Documentation
-        url: https://dopost.co/docs/api
-      - type: GettingStarted
-        url: https://dopost.co/docs/api
-      - type: Pricing
-        url: https://dopost.co/pricing
-    contact:
-      - FN: dopost
-        url: https://dopost.co/
+- name: dopost Social Media Scheduler API
+  description: >-
+    REST API for scheduling and publishing social posts across Instagram, Facebook, TikTok, Pinterest,
+    X (Twitter), and YouTube. Multi-network, multi-account, single key.
+  humanURL: https://dopost.co/
+  baseURL: https://dopost.co
+  tags:
+  - Social Media Scheduling
+  - Multi-Network
+  properties:
+  - type: Documentation
+    url: https://dopost.co/docs/api
+  - type: GettingStarted
+    url: https://dopost.co/docs/api
+  - type: Pricing
+    url: https://dopost.co/pricing
+  contact:
+  - FN: dopost
+    url: https://dopost.co/
+- aid: dopost-co:dopost-co-media-api
+  name: dopost Media API
+  description: Upload, list, and delete media assets used in posts.
+  humanURL: https://dopost.co/
+  baseURL: https://dopost.co
+  tags:
+  - Media
+  properties:
+  - type: OpenAPI
+    url: openapi/dopost-co-media-api-openapi.yml
+- aid: dopost-co:dopost-co-posts-api
+  name: dopost Posts API
+  description: Schedule, retrieve, reschedule, and delete posts across connected networks.
+  humanURL: https://dopost.co/
+  baseURL: https://dopost.co
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/dopost-co-posts-api-openapi.yml
+- aid: dopost-co:dopost-co-social-accounts-api
+  name: dopost Social Accounts API
+  description: Inspect connected social accounts and per-network posting limits.
+  humanURL: https://dopost.co/
+  baseURL: https://dopost.co
+  tags:
+  - Social Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/dopost-co-social-accounts-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/dopost-co-agentic-access.yml
