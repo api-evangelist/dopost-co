@@ -1,0 +1,18 @@
+{
+  "provider": "dopost-co",
+  "sources": [
+    "dopost-co-media-api-openapi.yml",
+    "dopost-co-posts-api-openapi.yml",
+    "dopost-co-social-accounts-api-openapi.yml"
+  ],
+  "outputs": [
+    "dopost-co-media-api-openapi.yml",
+    "dopost-co-posts-api-openapi.yml",
+    "dopost-co-social-accounts-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
