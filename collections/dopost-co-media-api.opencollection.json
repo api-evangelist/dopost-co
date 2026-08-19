@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dopost Social Scheduler Media API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Media",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List media assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/media",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve media files from your workspace with cursor-based pagination."
+        },
+        {
+          "info": {
+            "name": "Initiate a media upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dopost.co/api/v1/media",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "First step of the dopost media upload workflow: request a presigned URL by\ndeclaring the file you intend to upload. The response includes a `mediaId`\nand an upload `url` to PUT the file bytes to. Documented as a three-step\nflow (request presigned URL, upload file, finalize).\n"
+        },
+        {
+          "info": {
+            "name": "Delete a media asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dopost.co/api/v1/media/:mediaId",
+            "params": [
+              {
+                "name": "mediaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a media asset"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

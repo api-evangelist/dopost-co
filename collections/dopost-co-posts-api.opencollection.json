@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dopost Social Scheduler Media Posts API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Publish or schedule a post",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dopost.co/api/v1/post/publish",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Publish a post immediately or schedule it for a future time on a single connected\nsocial account. When `publishAt` is `null`, the post publishes immediately. When\n`publishAt` is an ISO 8601 timestamp, the post is scheduled.\n"
+        },
+        {
+          "info": {
+            "name": "List posts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/post",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by post status."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor returned by a previous response for pagination."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of posts to return."
+              }
+            ]
+          },
+          "docs": "Retrieve posts from your workspace with optional status filtering and cursor-based pagination."
+        },
+        {
+          "info": {
+            "name": "Get a post by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/post/:postId",
+            "params": [
+              {
+                "name": "postId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the post."
+              }
+            ]
+          },
+          "docs": "Get a post by ID"
+        },
+        {
+          "info": {
+            "name": "Reschedule a post",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dopost.co/api/v1/post/:postId",
+            "params": [
+              {
+                "name": "postId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the post."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the scheduled publish time of a draft or scheduled post."
+        },
+        {
+          "info": {
+            "name": "Delete a post",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dopost.co/api/v1/post/delete/:postId",
+            "params": [
+              {
+                "name": "postId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the post."
+              }
+            ]
+          },
+          "docs": "Delete a draft or scheduled post. Published posts cannot be deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

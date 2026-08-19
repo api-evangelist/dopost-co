@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "dopost Social Scheduler Media Social Accounts API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Social Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connected social accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/social/accounts"
+          },
+          "docs": "Retrieve all connected social media accounts for your workspace."
+        },
+        {
+          "info": {
+            "name": "Get per-platform posting limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dopost.co/api/v1/social/limits/:platform",
+            "params": [
+              {
+                "name": "platform",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve platform-specific posting limits and constraints, including per-format\nlimits for post types such as feed, story, reel, or YouTube short.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
