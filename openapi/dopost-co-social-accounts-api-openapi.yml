@@ -1,32 +1,11 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: dopost Social Scheduler Media Social Accounts API
+  title: dopost Social Media Scheduler Social Accounts API
   version: v1
   summary: REST API for scheduling and publishing posts across Instagram, Facebook, TikTok, Pinterest, X, and YouTube.
   description: 'Hand-authored OpenAPI 3.1 specification for the dopost Social Media Scheduler API,
 
-    derived from public documentation at https://dopost.co/docs/api as of 2026-05-27.
-
-
-    Authentication uses an API key passed via the `x-api-key` header. API key generation
-
-    happens inside the dopost web app.
-
-
-    All endpoints are mounted under `/api/v1/` and return `application/json`.
-
-
-    NOTE: Per-network publish options (Instagram, Facebook, TikTok, Pinterest, X, YouTube)
-
-    are referenced in the dopost docs but the exact field-level schemas for each network
-
-    are not enumerated in the public docs visible to anonymous users. They are modeled here
-
-    as `additionalProperties: true` containers so spec consumers do not lose data, and the
-
-    review notes (review.yml) flag these as `reconciled: false`.
-
-    '
+    derived from public documentation at https://dopost.co/docs/api as of 2026-05-27.'
   contact:
     name: dopost
     url: https://dopost.co/
@@ -71,9 +50,7 @@ paths:
       summary: Get per-platform posting limits
       description: 'Retrieve platform-specific posting limits and constraints, including per-format
 
-        limits for post types such as feed, story, reel, or YouTube short.
-
-        '
+        limits for post types such as feed, story, reel, or YouTube short.'
       parameters:
       - name: platform
         in: path
@@ -97,6 +74,22 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        platform:
+          $ref: '#/components/schemas/Platform'
+        displayName:
+          type: string
+        handle:
+          type: string
+        connected:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
     PlatformLimits:
       type: object
       properties:
@@ -119,32 +112,6 @@ components:
               maxDurationSeconds:
                 type: integer
             additionalProperties: true
-    Account:
-      type: object
-      properties:
-        id:
-          type: string
-        platform:
-          $ref: '#/components/schemas/Platform'
-        displayName:
-          type: string
-        handle:
-          type: string
-        connected:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
-    Platform:
-      type: string
-      description: Supported social network identifier.
-      enum:
-      - instagram
-      - facebook
-      - tiktok
-      - pinterest
-      - x
-      - youtube
     Error:
       type: object
       required:
@@ -157,6 +124,16 @@ components:
         details:
           type: object
           additionalProperties: true
+    Platform:
+      type: string
+      description: Supported social network identifier.
+      enum:
+      - instagram
+      - facebook
+      - tiktok
+      - pinterest
+      - x
+      - youtube
   responses:
     Unauthorized:
       description: Missing or invalid API key.

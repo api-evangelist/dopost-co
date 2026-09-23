@@ -1,9 +1,7 @@
 {
   "provider": "dopost-co",
   "sources": [
-    "dopost-co-media-api-openapi.yml",
-    "dopost-co-posts-api-openapi.yml",
-    "dopost-co-social-accounts-api-openapi.yml"
+    "_original/dopost-openapi.yml"
   ],
   "outputs": [
     "dopost-co-media-api-openapi.yml",
@@ -13,6 +11,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "dopost-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "dopost-co-media-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dopost-co-posts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "dopost-co-social-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

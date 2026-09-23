@@ -1,0 +1,1 @@
+{"resource":"https://mcp.dopost.co/mcp","resource_name":"dopost MCP","authorization_servers":["https://dopost.co"],"bearer_methods_supported":["header"],"scopes_supported":["posts:create","posts:read","posts:reschedule","posts:delete","media:upload","media:read","media:delete","media:list","social:accounts","social:limits","analytics:read"]}
