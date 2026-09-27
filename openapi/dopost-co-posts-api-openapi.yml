@@ -187,29 +187,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  parameters:
-    PostId:
-      name: postId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique identifier of the post.
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unprocessable:
-      description: Validation failed against platform constraints (character/media limits, schedule window, etc).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body is malformed.
+    NotFound:
+      description: Resource not found.
       content:
         application/json:
           schema:
@@ -220,20 +200,68 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
+    Unprocessable:
+      description: Validation failed against platform constraints (character/media limits, schedule window, etc).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body is malformed.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    PostStatus:
+    Platform:
       type: string
+      description: Supported social network identifier.
       enum:
-      - draft
-      - scheduled
-      - published
-      - failed
+      - instagram
+      - facebook
+      - tiktok
+      - pinterest
+      - x
+      - youtube
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        accountId:
+          type: string
+        status:
+          $ref: '#/components/schemas/PostStatus'
+        text:
+          type: string
+        publishAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        publishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        mediaIds:
+          type: array
+          items:
+            type: string
+        platform:
+          $ref: '#/components/schemas/Platform'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     NetworkOptions:
       type: object
       description: 'Network-specific publish options. dopost docs reference per-network option blocks
@@ -244,29 +272,6 @@ components:
 
         '
       additionalProperties: true
-    PostList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Post'
-        nextCursor:
-          type:
-          - string
-          - 'null'
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-          additionalProperties: true
     PublishPostRequest:
       type: object
       required:
@@ -302,49 +307,44 @@ components:
           $ref: '#/components/schemas/NetworkOptions'
         youtube:
           $ref: '#/components/schemas/NetworkOptions'
-    Post:
+    PostList:
       type: object
       properties:
-        id:
-          type: string
-        accountId:
-          type: string
-        status:
-          $ref: '#/components/schemas/PostStatus'
-        text:
-          type: string
-        publishAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        publishedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        mediaIds:
+        data:
           type: array
           items:
-            type: string
-        platform:
-          $ref: '#/components/schemas/Platform'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    Platform:
+            $ref: '#/components/schemas/Post'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    PostStatus:
       type: string
-      description: Supported social network identifier.
       enum:
-      - instagram
-      - facebook
-      - tiktok
-      - pinterest
-      - x
-      - youtube
+      - draft
+      - scheduled
+      - published
+      - failed
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+  parameters:
+    PostId:
+      name: postId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the post.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -33,7 +33,7 @@ specificationVersion: '0.23'
 created: '2026-05-27'
 modified: '2026-05-27'
 tags:
-  - Social-Media
+  - Social Media
   - Scheduling
   - Publishing
   - Instagram
@@ -56,13 +56,13 @@ tags_raw:
   - YouTube
   - Content Management
   - REST
+  - Social-Media
 apis:
 - name: dopost Social Media Scheduler API
   description: >-
     REST API for scheduling and publishing social posts across Instagram, Facebook, TikTok, Pinterest,
     X (Twitter), and YouTube. Multi-network, multi-account, single key.
   humanURL: https://dopost.co/
-  baseURL: https://dopost.co
   tags:
   - Social Media Scheduling
   - Multi-Network
@@ -80,7 +80,6 @@ apis:
   name: dopost Media API
   description: Upload, list, and delete media assets used in posts.
   humanURL: https://dopost.co/
-  baseURL: https://dopost.co
   tags:
   - Media
   properties:
@@ -90,7 +89,6 @@ apis:
   name: dopost Posts API
   description: Schedule, retrieve, reschedule, and delete posts across connected networks.
   humanURL: https://dopost.co/
-  baseURL: https://dopost.co
   tags:
   - Posts
   properties:
@@ -100,7 +98,6 @@ apis:
   name: dopost Social Accounts API
   description: Inspect connected social accounts and per-network posting limits.
   humanURL: https://dopost.co/
-  baseURL: https://dopost.co
   tags:
   - Social Accounts
   properties:

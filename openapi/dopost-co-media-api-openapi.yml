@@ -163,6 +163,17 @@ components:
         createdAt:
           type: string
           format: date-time
+    MediaList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MediaAsset'
+        nextCursor:
+          type:
+          - string
+          - 'null'
     Error:
       type: object
       required:
@@ -175,17 +186,6 @@ components:
         details:
           type: object
           additionalProperties: true
-    MediaList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MediaAsset'
-        nextCursor:
-          type:
-          - string
-          - 'null'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

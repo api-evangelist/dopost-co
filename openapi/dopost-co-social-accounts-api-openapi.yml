@@ -74,22 +74,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Account:
-      type: object
-      properties:
-        id:
-          type: string
-        platform:
-          $ref: '#/components/schemas/Platform'
-        displayName:
-          type: string
-        handle:
-          type: string
-        connected:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
     PlatformLimits:
       type: object
       properties:
@@ -112,6 +96,32 @@ components:
               maxDurationSeconds:
                 type: integer
             additionalProperties: true
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        platform:
+          $ref: '#/components/schemas/Platform'
+        displayName:
+          type: string
+        handle:
+          type: string
+        connected:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+    Platform:
+      type: string
+      description: Supported social network identifier.
+      enum:
+      - instagram
+      - facebook
+      - tiktok
+      - pinterest
+      - x
+      - youtube
     Error:
       type: object
       required:
@@ -124,16 +134,6 @@ components:
         details:
           type: object
           additionalProperties: true
-    Platform:
-      type: string
-      description: Supported social network identifier.
-      enum:
-      - instagram
-      - facebook
-      - tiktok
-      - pinterest
-      - x
-      - youtube
   responses:
     Unauthorized:
       description: Missing or invalid API key.
