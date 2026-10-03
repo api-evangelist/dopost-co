@@ -187,38 +187,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: Rate limit exceeded.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unprocessable:
-      description: Validation failed against platform constraints (character/media limits, schedule window, etc).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body is malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    PostStatus:
+      type: string
+      enum:
+      - draft
+      - scheduled
+      - published
+      - failed
     Platform:
       type: string
       description: Supported social network identifier.
@@ -229,6 +205,28 @@ components:
       - pinterest
       - x
       - youtube
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+    NetworkOptions:
+      type: object
+      description: 'Network-specific publish options. dopost docs reference per-network option blocks
+
+        (e.g. Instagram feed/story/reel, YouTube short, Pinterest board) but do not enumerate
+
+        every field publicly. This object is intentionally open.
+
+        '
+      additionalProperties: true
     Post:
       type: object
       properties:
@@ -262,16 +260,17 @@ components:
         updatedAt:
           type: string
           format: date-time
-    NetworkOptions:
+    PostList:
       type: object
-      description: 'Network-specific publish options. dopost docs reference per-network option blocks
-
-        (e.g. Instagram feed/story/reel, YouTube short, Pinterest board) but do not enumerate
-
-        every field publicly. This object is intentionally open.
-
-        '
-      additionalProperties: true
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        nextCursor:
+          type:
+          - string
+          - 'null'
     PublishPostRequest:
       type: object
       required:
@@ -307,36 +306,37 @@ components:
           $ref: '#/components/schemas/NetworkOptions'
         youtube:
           $ref: '#/components/schemas/NetworkOptions'
-    PostList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Post'
-        nextCursor:
-          type:
-          - string
-          - 'null'
-    PostStatus:
-      type: string
-      enum:
-      - draft
-      - scheduled
-      - published
-      - failed
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-          additionalProperties: true
+  responses:
+    BadRequest:
+      description: The request body is malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unprocessable:
+      description: Validation failed against platform constraints (character/media limits, schedule window, etc).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Rate limit exceeded.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     PostId:
       name: postId

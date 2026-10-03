@@ -96,22 +96,6 @@ components:
               maxDurationSeconds:
                 type: integer
             additionalProperties: true
-    Account:
-      type: object
-      properties:
-        id:
-          type: string
-        platform:
-          $ref: '#/components/schemas/Platform'
-        displayName:
-          type: string
-        handle:
-          type: string
-        connected:
-          type: boolean
-        createdAt:
-          type: string
-          format: date-time
     Platform:
       type: string
       description: Supported social network identifier.
@@ -134,6 +118,22 @@ components:
         details:
           type: object
           additionalProperties: true
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        platform:
+          $ref: '#/components/schemas/Platform'
+        displayName:
+          type: string
+        handle:
+          type: string
+        connected:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
   responses:
     Unauthorized:
       description: Missing or invalid API key.
