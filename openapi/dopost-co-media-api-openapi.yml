@@ -122,6 +122,18 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
     MediaAsset:
       type: object
       properties:
@@ -155,19 +167,13 @@ components:
           type:
           - string
           - 'null'
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-          additionalProperties: true
   responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid API key.
       content:
@@ -176,12 +182,6 @@ components:
             $ref: '#/components/schemas/Error'
     Unprocessable:
       description: Validation failed against platform constraints (character/media limits, schedule window, etc).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
       content:
         application/json:
           schema:

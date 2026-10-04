@@ -187,90 +187,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  parameters:
+    PostId:
+      name: postId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique identifier of the post.
   schemas:
-    PostStatus:
-      type: string
-      enum:
-      - draft
-      - scheduled
-      - published
-      - failed
-    Platform:
-      type: string
-      description: Supported social network identifier.
-      enum:
-      - instagram
-      - facebook
-      - tiktok
-      - pinterest
-      - x
-      - youtube
-    Error:
-      type: object
-      required:
-      - message
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        details:
-          type: object
-          additionalProperties: true
-    NetworkOptions:
-      type: object
-      description: 'Network-specific publish options. dopost docs reference per-network option blocks
-
-        (e.g. Instagram feed/story/reel, YouTube short, Pinterest board) but do not enumerate
-
-        every field publicly. This object is intentionally open.
-
-        '
-      additionalProperties: true
-    Post:
-      type: object
-      properties:
-        id:
-          type: string
-        accountId:
-          type: string
-        status:
-          $ref: '#/components/schemas/PostStatus'
-        text:
-          type: string
-        publishAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        publishedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        mediaIds:
-          type: array
-          items:
-            type: string
-        platform:
-          $ref: '#/components/schemas/Platform'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    PostList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Post'
-        nextCursor:
-          type:
-          - string
-          - 'null'
     PublishPostRequest:
       type: object
       required:
@@ -306,25 +231,90 @@ components:
           $ref: '#/components/schemas/NetworkOptions'
         youtube:
           $ref: '#/components/schemas/NetworkOptions'
+    Error:
+      type: object
+      required:
+      - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        accountId:
+          type: string
+        status:
+          $ref: '#/components/schemas/PostStatus'
+        text:
+          type: string
+        publishAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        publishedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        mediaIds:
+          type: array
+          items:
+            type: string
+        platform:
+          $ref: '#/components/schemas/Platform'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PostStatus:
+      type: string
+      enum:
+      - draft
+      - scheduled
+      - published
+      - failed
+    PostList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        nextCursor:
+          type:
+          - string
+          - 'null'
+    Platform:
+      type: string
+      description: Supported social network identifier.
+      enum:
+      - instagram
+      - facebook
+      - tiktok
+      - pinterest
+      - x
+      - youtube
+    NetworkOptions:
+      type: object
+      description: 'Network-specific publish options. dopost docs reference per-network option blocks
+
+        (e.g. Instagram feed/story/reel, YouTube short, Pinterest board) but do not enumerate
+
+        every field publicly. This object is intentionally open.
+
+        '
+      additionalProperties: true
   responses:
-    BadRequest:
-      description: The request body is malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unprocessable:
-      description: Validation failed against platform constraints (character/media limits, schedule window, etc).
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: Resource not found.
       content:
@@ -337,14 +327,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    PostId:
-      name: postId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique identifier of the post.
+    Unprocessable:
+      description: Validation failed against platform constraints (character/media limits, schedule window, etc).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body is malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
