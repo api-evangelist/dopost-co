@@ -2,21 +2,21 @@
   "repo": "dopost-co",
   "feeds": [
     {
-      "source": "https://dopost.co/youtube-social-media-scheduler",
-      "feed_url": "https://dopost.co/youtube-social-media-scheduler",
-      "title": "",
-      "saved": 0,
-      "method": "none"
-    },
-    {
       "source": "https://dopost.co/blog",
       "feed_url": "https://dopost.co/blog",
       "title": "",
       "saved": 0,
       "method": "none"
+    },
+    {
+      "source": "https://dopost.co/youtube-social-media-scheduler",
+      "feed_url": "https://dopost.co/youtube-social-media-scheduler",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "fetched": "2026-10-03T12:30:02Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "post_count": 3,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "path_blog",

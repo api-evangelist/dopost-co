@@ -14,7 +14,7 @@ edges:
     registered_name: co.dopost/dopost
     register_id: co.dopost/dopost
     detected_by: sweep-agent-tools.py
-    detected: '2026-10-14'
+    detected: '2026-10-15'
   mcp_registry:
     servers:
     - co.dopost/dopost
