@@ -108,16 +108,6 @@ components:
               maxDurationSeconds:
                 type: integer
             additionalProperties: true
-    Platform:
-      type: string
-      description: Supported social network identifier.
-      enum:
-      - instagram
-      - facebook
-      - tiktok
-      - pinterest
-      - x
-      - youtube
     Account:
       type: object
       properties:
@@ -134,6 +124,16 @@ components:
         createdAt:
           type: string
           format: date-time
+    Platform:
+      type: string
+      description: Supported social network identifier.
+      enum:
+      - instagram
+      - facebook
+      - tiktok
+      - pinterest
+      - x
+      - youtube
   responses:
     Unauthorized:
       description: Missing or invalid API key.
