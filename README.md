@@ -1,4 +1,4 @@
-# dopost (dopost-co)
+# dopost
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,62 +66,165 @@
 
 Social media scheduler API. Schedule and publish posts across Instagram, Facebook, TikTok, Pinterest, X (Twitter), and YouTube from a single REST API. Multi-account, multi-network publishing built for solo creators, agencies, and SaaS embedding.
 
-**APIs.json:** [https://dopost.co/apis.yml](https://dopost.co/apis.yml)
+**Areas:** Social Media · Scheduling · Publishing · Instagram · Facebook · TikTok · Pinterest · X / Twitter · YouTube · Content Management · REST
 
-## Tags
+## dopost on APIs.io
 
-- Social Media
-- Scheduling
-- Publishing
-- Instagram
-- Facebook
-- TikTok
-- Pinterest
-- X Twitter
-- YouTube
-- Content Management
-- REST
+Everything profiled for dopost is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/dopost-co/](https://apis.io/providers/dopost-co/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (4)
 
-- **Created:** 2026-05-27
-- **Modified:** 2026-05-27
+- [dopost Social Media Scheduler API](https://apis.io/apis/dopost-co/dopost-social-media-scheduler-api/) — REST API for scheduling and publishing social posts across Instagram, Facebook, TikTok, Pinterest, X (Twitter), and YouTube. Multi-network, multi-account,…
+- [dopost Media API](https://apis.io/apis/dopost-co/dopost-co-media-api/) — Upload, list, and delete media assets used in posts.
+- [dopost Posts API](https://apis.io/apis/dopost-co/dopost-co-posts-api/) — Schedule, retrieve, reschedule, and delete posts across connected networks.
+- [dopost Social Accounts API](https://apis.io/apis/dopost-co/dopost-co-social-accounts-api/) — Inspect connected social accounts and per-network posting limits.
 
-## APIs
+### Published properties
 
-### dopost Social Media Scheduler API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-REST API for scheduling and publishing social posts across Instagram, Facebook, TikTok, Pinterest, X (Twitter), and YouTube. Multi-network, multi-account, single key.
+#### MCP servers (1)
 
-- **Human URL:** [https://dopost.co/](https://dopost.co/)
-- **Base URL:** `https://dopost.co`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [dopost-co](https://apis.io/servers/dopost-co/dopost-co/)
 
-- Social Media Scheduling
-- Multi-Network
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://dopost.co/docs/api)
-- [Getting Started](https://dopost.co/docs/api)
-- [Pricing](https://dopost.co/pricing)
-- [Postman Collection](collections/dopost.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/dopost.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Dopost Co Agentic Access](https://apis.io/agentic-access/dopost-co/dopost-co-agentic-access/)
 
-## Common Properties
+#### JSON Schema (3)
+
+The data models the API reads and writes.
+
+- [Account](https://apis.io/schemas/dopost-co/account.schema/)
+- [MediaAsset](https://apis.io/schemas/dopost-co/media-asset.schema/)
+- [Post](https://apis.io/schemas/dopost-co/post.schema/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Dopost Co Context](https://apis.io/jsonld/dopost-co/dopost-co-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Dopost Co Vocabulary](https://apis.io/vocabularies/dopost-co/dopost-co-vocabulary/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Get Platform Limits](https://apis.io/examples/dopost-co/get-platform-limits/)
+- [Schedule Cross Network](https://apis.io/examples/dopost-co/schedule-cross-network/)
+- [Schedule Instagram Post](https://apis.io/examples/dopost-co/schedule-instagram-post/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [dopost Social Media Scheduler API](https://apis.io/collections/dopost-co/open-dopost/)
+- [dopost Social Scheduler Media API](https://apis.io/collections/dopost-co/open-dopost-co-media-api/)
+- [dopost Social Scheduler Media Posts API](https://apis.io/collections/dopost-co/open-dopost-co-posts-api/)
+- [dopost Social Scheduler Media Social Accounts API](https://apis.io/collections/dopost-co/open-dopost-co-social-accounts-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [dopost — jsonschema rules](https://apis.io/rules/dopost-co/dopost-co-jsonschema-spectral-rules/)
+- [dopost API Rules](https://apis.io/rules/dopost-co/dopost-co-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Dopost Co Authentication](https://apis.io/security/dopost-co/dopost-co-authentication/)
+- [Dopost Co Domain Security](https://apis.io/security/dopost-co/dopost-co-domain-security/)
+- [Dopost Co Vulnerability Disclosure](https://apis.io/security/dopost-co/dopost-co-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Dopost Co Plans Pricing](https://apis.io/plans/dopost-co/dopost-co-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Dopost Co Rate Limits](https://apis.io/rate-limits/dopost-co/dopost-co-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Dopost Co Finops](https://apis.io/finops/dopost-co/dopost-co-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://dopost.co/)
 - [Documentation](https://dopost.co/docs/api)
 - [Pricing](https://dopost.co/pricing)
-- [Instagram Scheduler](https://dopost.co/instagram-social-media-scheduler)
-- [Facebook Scheduler](https://dopost.co/facebook-social-media-scheduler)
-- [Tik Tok Scheduler](https://dopost.co/tiktok-social-media-scheduler)
-- [Pinterest Scheduler](https://dopost.co/pinterest-social-media-scheduler)
-- [X Scheduler](https://dopost.co/x-social-media-scheduler)
-- [You Tube Scheduler](https://dopost.co/youtube-social-media-scheduler)
+- [Blog](https://dopost.co/blog)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 20.0** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.7 |
+| Contract quality | 5.4 |
+| Contract governance | 13.6 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 18.4 |
+
+**Agent readiness 46.5** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/dopost-co/](https://apis.io/providers/dopost-co/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for dopost: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/dopost-co/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
